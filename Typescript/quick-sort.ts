@@ -50,10 +50,7 @@ export const quickSort = (arr: Array<Number>, low: number = 0, high: number = ar
 
 // Immutable & ES6 quicksort
 export const quickSortES6 = (arr: Array<Number>): Array<Number> => arr.length > 0
-  ? (() => {
-    const [pivot, ...tail] = arr
-    return [...quickSortES6(tail.filter(x => x < pivot)), pivot, ...quickSortES6(tail.filter(x => x >= pivot))]
-  })()
+  ? (([pivot, ...tail]) => [...quickSortES6(tail.filter(x => x < pivot)), pivot, ...quickSortES6(tail.filter(x => x >= pivot))])(arr)
   : []
 
 // Something better
@@ -62,9 +59,6 @@ export const qSort = <T>(list: Array<T>): Array<T> =>
     qSort(tail.filter(x => x < pivot))
       .concat(pivot)
       .concat(qSort(tail.filter(x => x >= pivot))))(list) : []
-
-// ! Esoterical code, do NOT use!!!
-let q=([p,...l])=>l.length>0?(()=>[...q(l).filter(x=>x<p),p,...q(l).filter(x=>x>=p)])():[p]
 
 // Esoteric stuff, but works, you can try
 let qs=(l)=>l.length>0?(([p,...t])=>[...qs(t.filter(x=>x<p)),p,...qs(t.filter(x=>x>=p))])(l):[]
