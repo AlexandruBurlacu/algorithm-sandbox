@@ -56,7 +56,17 @@ export const quickSortES6 = (arr: Array<Number>): Array<Number> => arr.length > 
   })()
   : []
 
+// Something better
+export const qSort = <T>(list: Array<T>): Array<T> =>
+  (list.length > 0) ? (([pivot, ...tail]) =>
+    qSort(tail.filter(x => x < pivot))
+      .concat(pivot)
+      .concat(qSort(tail.filter(x => x >= pivot))))(list) : []
+
 // ! Esoterical code, do NOT use!!!
 let q=([p,...l])=>l.length>0?(()=>[...q(l).filter(x=>x<p),p,...q(l).filter(x=>x>=p)])():[p]
+
+// Esoteric stuff, but works, you can try
+let qs=(l)=>l.length>0?(([p,...t])=>[...qs(t.filter(x=>x<p)),p,...qs(t.filter(x=>x>=p))])(l):[]
 
 export default quickSort
