@@ -39,7 +39,7 @@ const partitionRight = (arr: Array<Number>, low: number, high: number): number =
 }
 
 // The generic quicksort function
-const quickSort = (arr: Array<Number>, low: number = 0, high: number = arr.length - 1): void => {
+export const quickSort = (arr: Array<Number>, low: number = 0, high: number = arr.length - 1): void => {
   if (low >= high) return
 
   const partitioningIndex = partitionLeft(arr, low, high)
@@ -49,12 +49,14 @@ const quickSort = (arr: Array<Number>, low: number = 0, high: number = arr.lengt
 }
 
 // Immutable & ES6 quicksort
-const quickSortES6 = (arr: Array<Number>): Array<Number> => arr.length === 0
-  ? []
-  : (() => {
+export const quickSortES6 = (arr: Array<Number>): Array<Number> => arr.length > 0
+  ? (() => {
     const [pivot, ...tail] = arr
     return [...quickSortES6(tail.filter(x => x < pivot)), pivot, ...quickSortES6(tail.filter(x => x >= pivot))]
   })()
+  : []
 
-console.error(CASUAL_NUMBERS)
-console.error(quickSortES6(CASUAL_NUMBERS))
+// ! Esoterical code, do NOT use!!!
+let q=([p,...l])=>l.length>0?(()=>[...q(l).filter(x=>x<p),p,...q(l).filter(x=>x>=p)])():[p]
+
+export default quickSort
