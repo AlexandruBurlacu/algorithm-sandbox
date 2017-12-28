@@ -15,13 +15,6 @@ func filter(list []int, op func(int) bool) []int {
 	return result
 }
 
-func smth() bool {
-	if 1 == 1 {
-		return true
-	}
-	return false
-}
-
 func quickSort(list []int) []int {
 
 	if len(list) == 0 {
