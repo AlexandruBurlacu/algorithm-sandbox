@@ -1,13 +1,11 @@
 /**
  * Inspired by http://curtis.ml.cmu.edu/w/courses/index.php/Beam_Search
- *             http://jhave.org/algorithms/graphs/beamsearch/beamsearch.shtml
- *             http://www.cs.utexas.edu/~mooney/cs343/slide-handouts/heuristic-search.4.pdf
+ * Data & intuition from http://www.cs.utexas.edu/~mooney/cs343/slide-handouts/heuristic-search.4.pdf
  * 
  * Adjacency List
  * data Graph = [
- *   {name : [distance, neibhours[]]}
+ *   {city: name, value: distance, neibhours: []]}
  * ] 
- * 
  */
 
 const romanianRoutesGraph = [
@@ -62,7 +60,7 @@ class BeamSearch {
 
     private next(states) {
         const __states = [...states]
-        return this.flatten(__states
+        return this.flatten(__states.reverse()
                               .pop()
                               .neibhours
                               .map(c => this.problemSpace.filter(st => st.city === c)))
@@ -70,22 +68,25 @@ class BeamSearch {
 
     run(initialStateIndex: number, beamSize: number, scoreFn) {
         let currentStates = []
-        let visited = []
+        let visited: Set = new Set()
+        
         currentStates = this.add(this.problemSpace[initialStateIndex], currentStates)
-        visited = this.add(this.problemSpace[initialStateIndex], currentStates)
 
-        var i = 0
+        visited.add(this.problemSpace[initialStateIndex])
+
         while(this.goalNotIn(currentStates)) {
             const candidates = this.next(currentStates).map(scoreFn).sort((a, b) => a.value - b.value)
+
             currentStates = this.flatten([...currentStates, this.prune(candidates, beamSize)])
-            currentStates = currentStates.filter(st => !this.in(st, visited))
-            visited = visited.concat(candidates)
+            currentStates = currentStates.filter(st => !visited.has(st))
+
+            candidates.forEach(cand => visited.add(cand))
         }
-        return currentStates
+        return [currentStates, visited]
     }
 }
 
-console.log(new BeamSearch(romanianRoutesGraph).run(0, 2, node => node))
+const [fin, visited] = new BeamSearch(romanianRoutesGraph).run(0, 1, node => node)
 
-// const traverse = xs => xs.forEach(element => element.neibhours.forEach(n => console.log(n)))
-// traverse(romanianRoutesGraph)
+console.log(fin)
+console.log(visited)
