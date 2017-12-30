@@ -15,7 +15,7 @@ func filter(list []int, op func(int) bool) []int {
 	return result
 }
 
-func quickSort(list []int) []int {
+func QuickSort(list []int) []int {
 
 	if len(list) == 0 {
 		return list
@@ -41,5 +41,5 @@ func main() {
 		randArr = append(randArr, rand.Int()%1000)
 	}
 	fmt.Println(randArr)
-	fmt.Println(quickSort(randArr))
+	fmt.Println(QuickSort(randArr))
 }
