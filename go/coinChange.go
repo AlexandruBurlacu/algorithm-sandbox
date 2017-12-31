@@ -16,28 +16,27 @@ func CoinChangeRec(totalAmmount, i int, availableCoins []int) int {
 	return CoinChangeRec(totalAmmount-availableCoins[i], i, availableCoins) + CoinChangeRec(totalAmmount, i+1, availableCoins)
 }
 
-// CoinChangeDp - time & space: O(totalAmount * len(availableCoins)) [WIP]
+// CoinChangeDp - time & space: O(totalAmount * len(availableCoins))
 func CoinChangeDp(totalAmmount int, availableCoins []int) int {
 	tableWidth := len(availableCoins)
-	solution := make([]int, (tableWidth+1)*(totalAmmount+1))
+	solution := make([][]int, tableWidth+1)
 
-	for i := 0; i <= totalAmmount; i++ {
-		solution[(tableWidth+1)*i+0] = 1
+	for i := 0; i <= tableWidth; i++ {
+		solution[i] = make([]int, totalAmmount+1)
+		solution[i][0] = 1
 	}
 
 	for i := 1; i <= tableWidth; i++ {
 		for j := 1; j <= totalAmmount; j++ {
 			if availableCoins[i-1] <= j {
-				solution[i*totalAmmount+j] = solution[(i-1)*totalAmmount+j] + solution[i*totalAmmount+(j-availableCoins[i-1])]
+				solution[i][j] = solution[i-1][j] + solution[i][j-availableCoins[i-1]]
 			} else {
-				solution[i*totalAmmount+j] = solution[(i-1)*totalAmmount+j]
+				solution[i][j] = solution[i-1][j]
 			}
 		}
 	}
 
-	fmt.Println(solution)
-
-	return solution[len(availableCoins)*totalAmmount]
+	return solution[tableWidth][totalAmmount]
 }
 
 func main() {
