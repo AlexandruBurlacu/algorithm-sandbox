@@ -21,9 +21,8 @@ int coinchange_rec(int total_ammount, int i, std::vector<int> available_coins) {
 }
 
 int coinchange_dp(int total_ammount, std::vector<int> available_coins) {
-    int** table;
     int table_width = available_coins.size();
-    table = new int*[table_width + 1];
+    int** table = new int*[table_width + 1];
 
     for (register int i = 0; i <= table_width;++i) {
         table[i] = new int[total_ammount + 1];
@@ -37,12 +36,10 @@ int coinchange_dp(int total_ammount, std::vector<int> available_coins) {
 			} else {
 				table[i][j] = table[i-1][j];
             }
-
-            std::cout << table[i][j] << " ";
         }
     }
 
-    return table[total_ammount][table_width];
+    return table[table_width][total_ammount];
 }
 
 int main() {
