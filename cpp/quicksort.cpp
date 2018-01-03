@@ -1,10 +1,14 @@
+/* Run the code with the following flags:
+ * g++ <filename/>.cpp --std=c++11 -O2 -o run && ./run
+ */
+
 #include <iostream>
 #include <vector>
 
 template <typename T>
 std::vector<T> concat(std::vector<T> vec1, std::vector<T> vec2) {
     std::vector<T> resp_vec(vec1);
-    for (auto element : vec2) {
+    for (T element : vec2) {
         resp_vec.push_back(element);
     }
 
@@ -29,7 +33,7 @@ std::vector<T> quicksort(std::vector<T> vec_in) {
 template <typename F, typename T>
 std::vector<T> filter(std::vector<T> vec_in, F pred) {
     std::vector<T> resp;
-    for (auto element : vec_in) {
+    for (T element : vec_in) {
         if (pred(element)) {
             resp.push_back(element);
         }
@@ -40,7 +44,7 @@ std::vector<T> filter(std::vector<T> vec_in, F pred) {
 
 template <typename T>
 inline void pprinter(std::vector<T> data) {
-    for (auto item : data) {
+    for (T item : data) {
         std::cout << item << " ";
     }
 }
@@ -53,6 +57,7 @@ int main() {
     std::cout << std::endl;
     std::cout << "After ";
     pprinter(quicksort(data));
+    std::cout << std::endl;
 
     return 0;
 }

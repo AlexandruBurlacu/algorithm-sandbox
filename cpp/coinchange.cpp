@@ -1,9 +1,13 @@
+/* Run the code with the following flags:
+ * g++ <filename/>.cpp --std=c++11 -O2 -o run && ./run
+ */
+
 #include <iostream>
 #include <vector>
 
 template <typename T>
 inline void pprinter(std::vector<T> data) {
-    for (auto item : data) {
+    for (T item : data) {
         std::cout << item << " ";
     }
 }
