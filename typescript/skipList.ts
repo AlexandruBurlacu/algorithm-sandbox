@@ -11,6 +11,9 @@ class SkipListNode {
   }
 }
 
+/**
+ * TODO: implement lookup by index
+ */
 class SkipList {
 
   private head: SkipListNode
@@ -76,5 +79,5 @@ class SkipList {
 }
 
 const slist = new SkipList(1000)
-slist.insertMany([12, 41, 525, 63, 744])
+slist.insertMany([12, 41, 525, 63, 744, 412, 52, 636, 74, 124, 214, 52, 78])
 console.log(slist.toArray())
