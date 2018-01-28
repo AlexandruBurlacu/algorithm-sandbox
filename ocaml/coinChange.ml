@@ -1,3 +1,4 @@
+(* Needs fix *)
 let coinChange amount coins =
   let ways = Array.make (amount + 1) 0
   Array.set ways 0 1
